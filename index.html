@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registro de Movimientos</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
     <div class="container">
@@ -26,8 +26,11 @@
             <button id="registerBtn" class="btn-primary">Registrar Movimiento</button>
             <button id="historyBtn" class="btn-secondary">Mostrar Historial</button>
         </div>
-        <div id="history" class="history-container"></div>
+        <section class="balance-card">
+            <h2>Balance: S/<span id="total-balance">0.00</span></h2>
+        </section>
+        <div id="history" class="history-container">
     </div>
-    <script src="app.js"></script>
+    <script type="module" src="js/app.js"></script>
 </body>
 </html>
