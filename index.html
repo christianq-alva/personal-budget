@@ -9,27 +9,28 @@
 <body>
     <div class="container">
         <h1>Registro de Movimientos</h1>
-        <div class="form-container">
+        <form id="transaction-form">
+            <div class="form-group">
+                <label for="description">Descripción</label>
+                <input type="text" id="description" placeholder="Descripción" required>
+            </div>
             <div class="form-group">
                 <label for="amount">Monto (S/)</label>
-                <input type="number" id="amount" step="0.01" required>
+                <input type="number" id="amount" placeholder="Monto" step="0.01" required>
             </div>
             <div class="form-group">
-                <label>Tipo de Movimiento:</label>
-                <div class="radio-group">
-                    <input type="radio" id="income" name="movementType" value="income" checked>
-                    <label for="income">Ingreso</label>
-                    <input type="radio" id="expense" name="movementType" value="expense">
-                    <label for="expense">Egreso</label>
-                </div>
+                <label for="type">Tipo de Movimiento</label>
+                <select id="type" required>
+                    <option value="ingreso">Ingreso</option>
+                    <option value="gasto">Gasto</option>
+                </select>
             </div>
-            <button id="registerBtn" class="btn-primary">Registrar Movimiento</button>
-            <button id="historyBtn" class="btn-secondary">Mostrar Historial</button>
+            <button type="submit" class="btn-primary">Agregar</button>
+        </form>
+        <div id="transactions-container" class="history-container">
+            <h3>Total: <span id="total">S/0.00</span></h3>
+            <ul id="transactions-list"></ul>
         </div>
-        <section class="balance-card">
-            <h2>Balance: S/<span id="total-balance">0.00</span></h2>
-        </section>
-        <div id="history" class="history-container">
     </div>
     <script type="module" src="js/app.js"></script>
 </body>
