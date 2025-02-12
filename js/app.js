@@ -9,19 +9,20 @@ document.addEventListener('DOMContentLoaded', () => {
     const typeSelect = document.getElementById('type');
     const totalElement = document.getElementById('total');
     const transactionsList = document.getElementById('transactions-list');
+    const searchInput = document.getElementById('search');
 
     const budget = new Budget();
 
     const updateUI = () => {
         const total = budget.calculateTotal();
-        totalElement.textContent = budget.formatAmount(total);
+        totalElement.textContent = formatAmount(total);
 
         transactionsList.innerHTML = '';
         budget.transactions.forEach(transaction => {
             const li = document.createElement('li');
             li.innerHTML = `
-                ${transaction.description} - 
-                ${budget.formatAmount(transaction.amount)} 
+                ${transaction.formatDescription()} - 
+                ${formatAmount(transaction.amount)} 
                 (${transaction.getFormattedDate()})
                 <button onclick="removeTransaction(${transaction.id})">Eliminar</button>
             `;
@@ -30,11 +31,47 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     };
 
+    const searchTransactions = (query) => {
+        transactionsList.innerHTML = '';
+        const filteredTransactions = budget.transactions.filter(transaction => 
+            transaction.description.toLowerCase().includes(query.toLowerCase())
+        );
+
+        filteredTransactions.forEach(transaction => {
+            const li = document.createElement('li');
+            li.innerHTML = `
+                ${transaction.formatDescription()} - 
+                ${formatAmount(transaction.amount)} 
+                (${transaction.getFormattedDate()})
+                <button onclick="removeTransaction(${transaction.id})">Eliminar</button>
+            `;
+            li.style.color = transaction.type === 'ingreso' ? '#4CAF50' : '#f44336';
+            transactionsList.appendChild(li);
+        });
+    };
+
+    const formatAmount = (amount) => {
+        return amount.toLocaleString('es-PE', {
+            style: 'currency',
+            currency: 'PEN'
+        });
+    };
+
+    const getMonthName = (date) => {
+        return date.toLocaleString('es-PE', { month: 'long' });
+    };
+
     window.removeTransaction = (id) => {
         if (budget.remove(id)) {
             updateUI();
         }
     };
+
+    if (searchInput) {
+        searchInput.addEventListener('input', (event) => {
+            searchTransactions(event.target.value);
+        });
+    }
 
     form.addEventListener('submit', (event) => {
         event.preventDefault();

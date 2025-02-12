@@ -30,6 +30,35 @@ Budget.prototype.remove = function(id) {
 };
 
 /**
+ * Finds a transaction by its ID
+ * @param {number} id - ID of the transaction to find
+ * @returns {Transaction|undefined} - Found transaction or undefined
+ */
+Budget.prototype.findTransactionById = function(id) {
+    return this.transactions.find(transaction => transaction.id === id);
+};
+
+/**
+ * Filters transactions by type
+ * @param {string} type - Type of transactions to filter
+ * @returns {Transaction[]} - Array of filtered transactions
+ */
+Budget.prototype.filterTransactionsByType = function(type) {
+    return this.transactions.filter(transaction => transaction.type === type);
+};
+
+/**
+ * Calculates total amount for a specific transaction type
+ * @param {string} type - Type of transactions to sum
+ * @returns {number} - Total amount
+ */
+Budget.prototype.getTotalByType = function(type) {
+    return this.transactions.reduce((total, transaction) => {
+        return transaction.type === type ? total + transaction.amount : total;
+    }, 0);
+};
+
+/**
  * Calculates the total balance of all transactions
  * @returns {number} - Total balance
  */
